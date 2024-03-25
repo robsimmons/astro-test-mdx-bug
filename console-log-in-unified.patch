@@ -1,0 +1,22 @@
+--- node_modules/unified/lib/index.js
++++ node_modules/unified/lib/index.js
+@@ -727,12 +727,19 @@
+      */
+     function executor(resolve, reject) {
+       const realFile = vfile(file)
++      const fn = realFile.history[0]
+       // Assume `ParseTree` (the result of the parser) matches `HeadTree` (the
+       // input of the first transform).
++      const fnStartTime = performance.now()
+       const parseTree =
+         /** @type {HeadTree extends undefined ? Node : HeadTree} */ (
+           /** @type {unknown} */ (self.parse(realFile))
+         )
++      const fnEndTime = performance.now()
++      const testMatch = fn.match(/test-([0-9]+)\.mdx$/)
++      if (testMatch) {
++        console.log(`patched-perf, ${testMatch[1]}, ${Math.round(fnEndTime - fnStartTime)}`)
++      }
+ 
+       self.run(parseTree, realFile, function (error, tree, file) {
+         if (error || !tree || !file) {
