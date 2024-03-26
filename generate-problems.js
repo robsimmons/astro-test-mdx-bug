@@ -2,7 +2,7 @@ import { writeFileSync } from "fs";
 
 const NUM_LINES_IN_CODE_SEG = 10000;
 
-for (let size = 1; size < 40; size = Math.ceil(size * 1.2)) {
+for (let size = 1; size < 25; size = Math.ceil(size * 1.2)) {
   let file = [
     "---",
     "title: Test",
